@@ -1,0 +1,20 @@
+description: >
+  This command is to get CodeDeploy latest deployment.
+parameters:
+  application-name:
+    type: string
+    default: ''
+    description: "The name of the CodeDeploy application."
+  deployment-group-name:
+    type: string
+    default: ''
+    description: "The name of the CodeDeploy deployment group."
+steps:
+  - run:
+      environment:
+        APP_NAME: <<parameters.application-name>>
+        DEPLOY_GROUP_NAME: <<parameters.deployment-group-name>>
+      name: Get latest CodeDeploy Deployment ID for <<parameters.deployment-group-name>> deployment group.
+      command: <<include(scripts/aws-codeDeploy-status.sh)>>
+
+      

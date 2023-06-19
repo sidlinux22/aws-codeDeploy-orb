@@ -1,0 +1,20 @@
+description: >
+  A job to get CodeDeploy latest deployment.
+parameters:
+  application-name:
+    type: string
+    default: ''
+    description: "The name of the CodeDeploy application."
+  deployment-group-name:
+    type: string
+    default: ''
+    description: "The name of the CodeDeploy deployment group."
+  executor:
+    description: The executor to use for this job. By default, this will use the "default" executor provided by this orb.
+    type: executor
+    default: default
+executor: << parameters.executor >>
+steps:
+  - get-deployment-id:
+      application-name: << parameters.application-name >>
+      deployment-group-name: << parameters.deployment-group-name>>
