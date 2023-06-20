@@ -1,45 +1,47 @@
-version: 2.1
-# Specify the version of the CircleCI configuration
-orbs:
-  aws-cli: circleci/aws-cli@4.0.0
-  # Import the AWS CLI orb
-  aws-code-deploy: sidlinux22/aws-code-deploy@0.0.1
-  # Import the AWS CodeDeploy orb
-
-jobs:
-  deploy:
-    docker:
-      - image: cimg/aws:2023.06
-      # Use the AWS Docker image for the job
-    steps:
-      # Setup AWS credentials in environment variables
-      - aws-cli/setup:
-          aws_access_key_id: AWS_ACCESS_KEY_ID
-          aws_secret_access_key: AWS_SECRET_ACCESS_KEY
-          region: AWS_REGION
-          # Provide AWS access key, secret access key, and region as environment variables
-
-      # Fetch latest deployment ID before new deployment start.
-      - aws-code-deploy/get-deployment-id:
-          application-name: "change_to_codeDeploy_application-name"
-          deployment-group-name: "change_to_codeDeploy_deployment-group-name"
-          # Get the latest deployment ID for the specified application and deployment group
-
-      # Add CodeDeploy Steps like copying Artifcate to S3 etc...
-
-      # Fetch new CodeDeploy deployment ID status.
-      - aws-code-deploy/get-deployment-status:
-          application-name: "change_to_codeDeploy_application-name"
-          deployment-group-name: "change_to_codeDeploy_deployment-group-name"
-          deployment-start-timeout: "Optional_change_to_codeDeploy_deployment-start-timeout"
-          deployment-completion-timeout: "Optional_change_to_codeDeploy_deployment-completion-timeout"
-          # Get the status of the new CodeDeploy deployment using the latest deployment ID
-workflows:
-  version: 2
-  codeDeploy-deployment:
-    jobs:
-      - deploy:
-          filters:
-            branches:
-              ignore: /develop|master/
-              # Specify branch filters for the workflow execution
+description: >
+  Sample example description.
+# Provide a use-case based example for using this orb.
+# Everything in the `usage` section will be displayed in the orb registry.
+# Comments are not retained.
+usage:
+  version: 2.1
+  # Specify the version of the CircleCI configuration
+  orbs:
+    aws-cli: circleci/aws-cli@4.0.0
+    # Import the AWS CLI orb
+    aws-code-deploy: sidlinux22/aws-code-deploy@0.0.1
+    # Import the AWS CodeDeploy orb
+  jobs:
+    deploy:
+      docker:
+        - image: cimg/aws:2023.06
+        # Use the AWS Docker image for the job
+      steps:
+        # Setup AWS credentials in environment variables
+        - aws-cli/setup:
+            aws_access_key_id: AWS_ACCESS_KEY_ID
+            aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+            region: AWS_REGION
+            # Provide AWS access key, secret access key, and region as environment variables
+        # Fetch latest deployment ID before new deployment start.
+        - aws-code-deploy/get-deployment-id:
+            application-name: "change_to_codeDeploy_application-name"
+            deployment-group-name: "change_to_codeDeploy_deployment-group-name"
+            # Get the latest deployment ID for the specified application and deployment group
+        # Add CodeDeploy Steps like copying Artifcate to S3 etc...
+        # Fetch new CodeDeploy deployment ID status.
+        - aws-code-deploy/get-deployment-status:
+            application-name: "change_to_codeDeploy_application-name"
+            deployment-group-name: "change_to_codeDeploy_deployment-group-name"
+            deployment-start-timeout: "Optional_change_to_codeDeploy_deployment-start-timeout"
+            deployment-completion-timeout: "Optional_change_to_codeDeploy_deployment-completion-timeout"
+            # Get the status of the new CodeDeploy deployment using the latest deployment ID
+  workflows:
+    version: 2
+    codeDeploy-deployment:
+      jobs:
+        - deploy:
+            filters:
+              branches:
+                ignore: /develop|master/
+                # Specify branch filters for the workflow execution
