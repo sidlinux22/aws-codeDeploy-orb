@@ -22,7 +22,7 @@ def fetch_target_deployment(application_name, deployment_group_name, pre_deploy_
         deploy_id = response["deploymentGroupInfo"]["lastAttemptedDeployment"]["deploymentId"]
         if deploy_id == pre_deploy_id:
             wait_period += 5
-            wait_timeout = int(os.getenv("WAIT_TIMEOUT", "180"))
+            wait_timeout = int(os.getenv("DEPLOYMENT_START_TIMEOUT", "180"))
             if wait_period > wait_timeout:
                 print(f"[Script timeout]: Deployment didn't change within {wait_timeout} seconds.")
                 return None, []
