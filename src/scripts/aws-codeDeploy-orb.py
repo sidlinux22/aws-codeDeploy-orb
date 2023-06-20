@@ -100,7 +100,7 @@ def fetch_deployment_id(application_name, deployment_group_name):
     )
     deploy_id = response["deploymentGroupInfo"]["lastAttemptedDeployment"]["deploymentId"]
 
-    print(f"Latest deployment ID: {deploy_id}")
+    print(f"{deploy_id}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in ["--get-deployment-status", "--get-deployment-id"]:

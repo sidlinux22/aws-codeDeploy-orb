@@ -3,11 +3,9 @@ description: >
 parameters:
   application-name:
     type: string
-    default: ''
     description: "The name of the CodeDeploy application."
   deployment-group-name:
     type: string
-    default: ''
     description: "The name of the CodeDeploy deployment group."
 steps:
   - run:
@@ -16,5 +14,3 @@ steps:
         DEPLOY_GROUP_NAME: <<parameters.deployment-group-name>>
       name: Get latest CodeDeploy Deployment ID for <<parameters.deployment-group-name>> deployment group.
       command: <<include(scripts/get-deployment-id.sh)>>
-
-      
