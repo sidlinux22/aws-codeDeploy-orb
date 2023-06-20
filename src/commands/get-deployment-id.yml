@@ -15,6 +15,6 @@ steps:
         APP_NAME: <<parameters.application-name>>
         DEPLOY_GROUP_NAME: <<parameters.deployment-group-name>>
       name: Get latest CodeDeploy Deployment ID for <<parameters.deployment-group-name>> deployment group.
-      command: <<include(scripts/aws-codeDeploy-status.sh)>>
+      command: <<include(scripts/get-deployment-id.sh)>>
 
       
