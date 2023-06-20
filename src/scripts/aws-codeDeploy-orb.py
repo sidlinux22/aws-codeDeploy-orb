@@ -130,7 +130,7 @@ if __name__ == "__main__":
     deployment_group_name = sys.argv[3]
 
     if flag == "--get-deployment-status":
-        pre_deploy_id = sys.argv[4]
+        pre_deploy_id = int(sys.argv[4])
         exit_code = fetch_code_deploy_status(application_name, deployment_group_name, pre_deploy_id)
     elif flag == "--get-deployment-id":
         fetch_deployment_id(application_name, deployment_group_name)
