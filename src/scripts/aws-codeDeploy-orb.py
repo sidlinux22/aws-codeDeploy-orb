@@ -33,10 +33,10 @@ def fetch_target_deployment(application_name, deployment_group_name, pre_deploy_
             wait_timeout = int(os.getenv("DEPLOYMENT_START_TIMEOUT", "180"))
             if wait_period > wait_timeout:
                 logger.error(f"[Script timeout]: CodeDeploy deployment didn't change within {wait_timeout} seconds.")
-                return None, []
+                return 1
 
             time.sleep(5)
-        logger.info("Waiting for Deployment to start...")
+        logger.info("Waiting for CodeDeploy Deployment to start...")
     response = client.list_deployment_instances(
         deploymentId=deploy_id
     )

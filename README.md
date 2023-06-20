@@ -1,7 +1,7 @@
 # Orb Template
 
 
-[![CircleCI Build Status](https://circleci.com/gh/sidlinux22/aws-codeDeploy-status.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/sidlinux22/aws-codeDeploy-status) [![CircleCI Orb Version](https://badges.circleci.com/orbs/sidlinux22/aws-codeDeploy-status.svg)](https://circleci.com/developer/orbs/orb/sidlinux22/aws-codeDeploy-status) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/sidlinux22/aws-codeDeploy-status/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
+[![CircleCI Build Status](https://circleci.com/gh/sidlinux22/aws-codeDeploy-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/sidlinux22/aws-codeDeploy-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/sidlinux22/aws-codeDeploy-orb.svg)](https://circleci.com/developer/orbs/orb/sidlinux22/aws-codeDeploy-orb) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/sidlinux22/aws-codeDeploy-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
 
 
@@ -15,20 +15,20 @@ _**Edit this area to include a custom title and description.**_
 
 ## Resources
 
-[CircleCI Orb Registry Page](https://circleci.com/developer/orbs/orb/sidlinux22/aws-codeDeploy-status) - The official registry page of this orb for all versions, executors, commands, and jobs described.
+[CircleCI Orb Registry Page](https://circleci.com/developer/orbs/orb/sidlinux22/aws-codeDeploy-orb) - The official registry page of this orb for all versions, executors, commands, and jobs described.
 
 [CircleCI Orb Docs](https://circleci.com/docs/orb-intro/#section=configuration) - Docs for using, creating, and publishing CircleCI Orbs.
 
 ### How to Contribute
 
-We welcome [issues](https://github.com/sidlinux22/aws-codeDeploy-status/issues) to and [pull requests](https://github.com/sidlinux22/aws-codeDeploy-status/pulls) against this repository!
+We welcome [issues](https://github.com/sidlinux22/aws-codeDeploy-orb/issues) to and [pull requests](https://github.com/sidlinux22/aws-codeDeploy-orb/pulls) against this repository!
 
 ### How to Publish An Update
 1. Merge pull requests with desired changes to the main branch.
     - For the best experience, squash-and-merge and use [Conventional Commit Messages](https://conventionalcommits.org/).
 2. Find the current version of the orb.
-    - You can run `circleci orb info sidlinux22/aws-codeDeploy-status | grep "Latest"` to see the current version.
-3. Create a [new Release](https://github.com/sidlinux22/aws-codeDeploy-status/releases/new) on GitHub.
+    - You can run `circleci orb info sidlinux22/aws-code-deploy | grep "Latest"` to see the current version.
+3. Create a [new Release](https://github.com/sidlinux22/aws-codeDeploy-orb/releases/new) on GitHub.
     - Click "Choose a tag" and _create_ a new [semantically versioned](http://semver.org/) tag. (ex: v1.0.0)
       - We will have an opportunity to change this before we publish if needed after the next step.
 4.  Click _"+ Auto-generate release notes"_.
