@@ -2,7 +2,15 @@ import os
 import sys
 import boto3
 import time
+import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(levelname)s] %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 def fetch_target_deployment(application_name, deployment_group_name, pre_deploy_id):
     deploy_id = None
@@ -24,19 +32,18 @@ def fetch_target_deployment(application_name, deployment_group_name, pre_deploy_
             wait_period += 5
             wait_timeout = int(os.getenv("DEPLOYMENT_START_TIMEOUT", "180"))
             if wait_period > wait_timeout:
-                print(f"[Script timeout]: Deployment didn't change within {wait_timeout} seconds.")
+                logger.error(f"[Script timeout]: CodeDeploy deployment didn't change within {wait_timeout} seconds.")
                 return None, []
 
             time.sleep(5)
-        print("Waiting for Deployment to start...")
+        logger.info("Waiting for Deployment to start...")
     response = client.list_deployment_instances(
         deploymentId=deploy_id
     )
     instance_ids = response["instancesList"]
 
-    print(f"Latest deployment ID: {deploy_id}")
-    print(f"Instance IDs: {instance_ids}")
-    print()
+    logger.info(f"CodeDeploy deployment started. ID: {deploy_id}")
+    logger.info(f"List of Instance IDs to be updated: {instance_ids}")
 
     return deploy_id, instance_ids
 
@@ -55,41 +62,51 @@ def fetch_code_deploy_status(application_name, deployment_group_name, pre_deploy
     deploy_id, instance_ids = fetch_target_deployment(application_name, deployment_group_name, pre_deploy_id)
 
     if deploy_id is None:
-        print("Deployment ID doesn't match the pre-deploy ID.")
+        logger.error("Deployment ID doesn't match the pre-deploy ID.")
         return 1
-
-    print(instance_ids)
-    print()
-
     with ThreadPoolExecutor() as executor:
         wait_period = 0
         while True:
             time.sleep(5)
             completed_count = 0
             in_progress_count = 0
+            failed_count = 0
+            stopped_count = 0
             futures = [executor.submit(fetch_target_status, deploy_id, target_id) for target_id in instance_ids]
 
             for future in as_completed(futures):
                 target_id, status = future.result()
-                print(f"Instance ID: {target_id}, Status: {status}")
+                logger.info(f"Deployment status for Instance ID: {target_id}, Status: {status}")
 
                 if status == "Succeeded":
                     completed_count += 1
                 elif status == "InProgress":
                     in_progress_count += 1
+                elif status == "Failed":
+                    failed_count += 1
+                elif status == "Stopped":
+                    stopped_count += 1
 
             if completed_count == len(instance_ids):
-                print("All instances Succeeded.")
+                logger.info("All instances succeeded.")
                 return 0
+
+            if failed_count > 0:
+                logger.error(f"{failed_count} instances failed.")
+                return 1
+
+            if stopped_count > 0:
+                logger.error(f"{stopped_count} instances stopped.")
+                return 1
 
             if in_progress_count == 0 and completed_count < len(instance_ids):
                 wait_period += 5
                 deploy_timeout = int(os.getenv("DEPLOYMENT_COMPLETION_TIMEOUT", "600"))
                 if wait_period > deploy_timeout:
-                    print(f"[Script timeout]: Code-Deploy deployment not completed in {deploy_timeout} seconds.")
+                    logger.error(f"[Script timeout]: CodeDeploy deployment not completed in {deploy_timeout} seconds.")
                     return 1
 
-                print("Waiting for Code-Deploy deployment to start...")
+                logger.info("Waiting for CodeDeploy deployment to start...")
 
 def fetch_deployment_id(application_name, deployment_group_name):
     client = boto3.client("codedeploy")
@@ -100,12 +117,12 @@ def fetch_deployment_id(application_name, deployment_group_name):
     )
     deploy_id = response["deploymentGroupInfo"]["lastAttemptedDeployment"]["deploymentId"]
 
-    print(f"{deploy_id}")
+    logger.info(f"Deployment ID: {deploy_id}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in ["--get-deployment-status", "--get-deployment-id"]:
-        print("Usage: python script.py --get-deployment-status <application-name> <deployment-group-name> <pre-deploy-id>")
-        print("       python script.py --get-deployment-id <application-name> <deployment-group-name>")
+        logger.error("Usage: python script.py --get-deployment-status <application-name> <deployment-group-name> <pre-deploy-id>")
+        logger.error("       python script.py --get-deployment-id <application-name> <deployment-group-name>")
         exit(1)
 
     flag = sys.argv[1]
@@ -119,7 +136,7 @@ if __name__ == "__main__":
         fetch_deployment_id(application_name, deployment_group_name)
         exit_code = 0
     else:
-        print("Invalid flag.")
+        logger.error("Invalid flag.")
         exit_code = 1
 
     exit(exit_code)
