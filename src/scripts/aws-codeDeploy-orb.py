@@ -33,7 +33,7 @@ def fetch_target_deployment(application_name, deployment_group_name, pre_deploy_
             wait_timeout = int(os.getenv("DEPLOYMENT_START_TIMEOUT", "180"))
             if wait_period > wait_timeout:
                 logger.error(f"[Script timeout]: CodeDeploy deployment didn't change within {wait_timeout} seconds.")
-                return 1
+                exit(1)
 
             time.sleep(5)
         logger.info("Waiting for CodeDeploy Deployment to start...")
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     deployment_group_name = sys.argv[3]
 
     if flag == "--get-deployment-status":
-        pre_deploy_id = int(sys.argv[4])
+        pre_deploy_id = sys.argv[4]
         exit_code = fetch_code_deploy_status(application_name, deployment_group_name, pre_deploy_id)
     elif flag == "--get-deployment-id":
         fetch_deployment_id(application_name, deployment_group_name)
