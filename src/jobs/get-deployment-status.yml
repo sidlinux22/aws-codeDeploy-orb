@@ -9,6 +9,14 @@ parameters:
     type: string
     default: ''
     description: "The name of the CodeDeploy deployment group."
+  deployment-start-timeout:
+    type: Integer
+    default: 180
+    description: "Timeout for deployment start."
+  deployment-completion-timeout:
+    type: Integer
+    default: 600
+    description: "Timeout for deployment completion."
   executor:
     description: The executor to use for this job. By default, this will use the "default" executor provided by this orb.
     type: executor

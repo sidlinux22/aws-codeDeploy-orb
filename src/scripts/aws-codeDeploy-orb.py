@@ -1,3 +1,4 @@
+import os
 import sys
 import boto3
 import time
@@ -6,9 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 def fetch_target_deployment(application_name, deployment_group_name, pre_deploy_id):
     deploy_id = None
     instance_ids = []
-
     client = boto3.client("codedeploy")
-
     wait_period = 0
     response = client.get_deployment_group(
         applicationName=application_name,
@@ -21,14 +20,14 @@ def fetch_target_deployment(application_name, deployment_group_name, pre_deploy_
             deploymentGroupName=deployment_group_name
         )
         deploy_id = response["deploymentGroupInfo"]["lastAttemptedDeployment"]["deploymentId"]
-
         if deploy_id == pre_deploy_id:
-            wait_period += 3
-            if wait_period > 180:
-                print("[Script timeout]: Deployment ID didn't change within 180 seconds.")
+            wait_period += 5
+            wait_timeout = int(os.getenv("WAIT_TIMEOUT", "180"))
+            if wait_period > wait_timeout:
+                print(f"[Script timeout]: Deployment didn't change within {wait_timeout} seconds.")
                 return None, []
 
-            time.sleep(3)
+            time.sleep(5)
         print("Waiting for Deployment to start...")
     response = client.list_deployment_instances(
         deploymentId=deploy_id
@@ -65,7 +64,7 @@ def fetch_code_deploy_status(application_name, deployment_group_name, pre_deploy
     with ThreadPoolExecutor() as executor:
         wait_period = 0
         while True:
-            time.sleep(3)
+            time.sleep(5)
             completed_count = 0
             in_progress_count = 0
             futures = [executor.submit(fetch_target_status, deploy_id, target_id) for target_id in instance_ids]
@@ -84,9 +83,10 @@ def fetch_code_deploy_status(application_name, deployment_group_name, pre_deploy
                 return 0
 
             if in_progress_count == 0 and completed_count < len(instance_ids):
-                wait_period += 3
-                if wait_period > 300:
-                    print("[Script timeout]: Code-Deploy deployment not started within 300 seconds.")
+                wait_period += 5
+                deploy_timeout = int(os.getenv("DEPLOYMENT_COMPLETION_TIMEOUT", "600"))
+                if wait_period > deploy_timeout:
+                    print(f"[Script timeout]: Code-Deploy deployment not completed in {deploy_timeout} seconds.")
                     return 1
 
                 print("Waiting for Code-Deploy deployment to start...")
