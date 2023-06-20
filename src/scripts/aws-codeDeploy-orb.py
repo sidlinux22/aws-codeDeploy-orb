@@ -116,7 +116,7 @@ def fetch_deployment_id(application_name, deployment_group_name):
         deploymentGroupName=deployment_group_name
     )
     deploy_id = response["deploymentGroupInfo"]["lastAttemptedDeployment"]["deploymentId"]
-
+    print(deploy_id)
     logger.info(f"Deployment ID: {deploy_id}")
 
 if __name__ == "__main__":
