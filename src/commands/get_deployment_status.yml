@@ -27,4 +27,4 @@ steps:
         DEPLOYMENT_START_TIMEOUT: <<parameters.deployment-start-timeout>>
         DEPLOYMENT_COMPLETION_TIMEOUT: <<parameters.deployment-completion-timeout>>
       name: CodeDeploy - Fetch <<parameters.deployment-group-name>> deployment status.
-      command: <<include(scripts/get-deployment-status.sh)>>
+      command: <<include(scripts/get_deployment_status.sh)>>

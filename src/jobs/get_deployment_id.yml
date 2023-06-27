@@ -15,6 +15,6 @@ parameters:
     default: default
 executor: << parameters.executor >>
 steps:
-  - get-deployment-id:
+  - get_deployment_id:
       application-name: << parameters.application-name >>
       deployment-group-name: << parameters.deployment-group-name>>

@@ -13,4 +13,4 @@ steps:
         APP_NAME: <<parameters.application-name>>
         DEPLOY_GROUP_NAME: <<parameters.deployment-group-name>>
       name: CodeDeploy - Get the latest Deployment ID for <<parameters.deployment-group-name>>
-      command: <<include(scripts/get-deployment-id.sh)>>
+      command: <<include(scripts/get_deployment_id.sh)>>
