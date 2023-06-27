@@ -153,8 +153,8 @@ def fetch_deployment_id(application_name, deployment_group_name):
 if __name__ == "__main__":
     try:
         if len(sys.argv) < 2 or sys.argv[1] not in ["--get-deployment-status", "--get-deployment-id"]:
-            logger.error("Usage: python script.py --get-deployment-status <application-name> <deployment-group-name> <pre-deploy-id>")
-            logger.error("       python script.py --get-deployment-id <application-name> <deployment-group-name>")
+            logger.error("Usage: python script.py --get-deployment-status <application_name> <deployment_group_name> <pre-deploy-id>")
+            logger.error("       python script.py --get-deployment-id <application_name> <deployment_group_name>")
             exit(1)
 
         flag = sys.argv[1]

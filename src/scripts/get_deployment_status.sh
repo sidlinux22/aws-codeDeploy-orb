@@ -13,10 +13,10 @@ if [[ -z "${PRE_Deployment_ID}" ]]; then
 fi
 
 # Define the URL for the Python script
-script_url="https://raw.githubusercontent.com/sidlinux22/aws-codeDeploy-orb/dev-0.0.1/src/scripts/aws-codeDeploy-orb.py"
+script_url="https://raw.githubusercontent.com/sidlinux22/aws-codeDeploy-orb/dev-0.0.1/src/scripts/aws_codeDeploy_orb.py"
 
 # Retrieve Python script from GitHub and save it as a file
 curl -sSLJO "$script_url"
 
 # Run the Python script with the parameters and capture the output
-python3 aws-codeDeploy-orb.py --get-deployment-status "${APP_NAME}" "${DEPLOY_GROUP_NAME}" "${PRE_Deployment_ID}"
+python3 aws_codeDeploy_orb.py --get-deployment-status "${APP_NAME}" "${DEPLOY_GROUP_NAME}" "${PRE_Deployment_ID}"

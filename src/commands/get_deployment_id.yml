@@ -1,16 +1,16 @@
 description: >
   This command is to get CodeDeploy latest deployment.
 parameters:
-  application-name:
+  application_name:
     type: string
     description: "The name of the CodeDeploy application."
-  deployment-group-name:
+  deployment_group_name:
     type: string
     description: "The name of the CodeDeploy deployment group."
 steps:
   - run:
       environment:
-        APP_NAME: <<parameters.application-name>>
-        DEPLOY_GROUP_NAME: <<parameters.deployment-group-name>>
-      name: CodeDeploy - Get the latest Deployment ID for <<parameters.deployment-group-name>>
+        APP_NAME: <<parameters.application_name>>
+        DEPLOY_GROUP_NAME: <<parameters.deployment_group_name>>
+      name: CodeDeploy - Get the latest Deployment ID for <<parameters.deployment_group_name>>
       command: <<include(scripts/get_deployment_id.sh)>>

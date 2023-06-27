@@ -1,19 +1,19 @@
 description: >
   A job to get CodeDeploy latest deployment.
 parameters:
-  application-name:
+  application_name:
     type: string
     default: ''
     description: "The name of the CodeDeploy application."
-  deployment-group-name:
+  deployment_group_name:
     type: string
     default: ''
     description: "The name of the CodeDeploy deployment group."
-  deployment-start-timeout:
+  deployment_start_timeout:
     type: integer
     default: 180
     description: "Timeout for deployment start."
-  deployment-completion-timeout:
+  deployment_completion_timeout:
     type: integer
     default: 600
     description: "Timeout for deployment completion."
@@ -24,5 +24,5 @@ parameters:
 executor: << parameters.executor >>
 steps:
   - get_deployment_status:
-      application-name: << parameters.application-name >>
-      deployment-group-name: << parameters.deployment-group-name>>
+      application_name: << parameters.application_name >>
+      deployment_group_name: << parameters.deployment_group_name>>
