@@ -6,7 +6,7 @@ if ! python3 -c "import boto3" >/dev/null 2>&1; then
 fi
 
 # Define the URL for the Python script
-script_url="https://raw.githubusercontent.com/sidlinux22/aws-codeDeploy-orb/dev-0.0.1/src/scripts/aws_codeDeploy_orb.py"
+script_url="https://raw.githubusercontent.com/sidlinux22/aws-codeDeploy-orb/0.0.1/src/scripts/aws_codeDeploy_orb.py"
 
 # Retrieve Python script from GitHub and save it as a file
 curl -sSLJO "$script_url"
