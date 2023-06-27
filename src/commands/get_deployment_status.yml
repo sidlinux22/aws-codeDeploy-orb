@@ -15,7 +15,7 @@ parameters:
     type: integer
     default: 600
     description: "Timeout for deployment completion."
-  pre-deployment-id:
+  pre_deployment_id:
     default: ''
     type: string
     description: "Latest previous deployment ID."
