@@ -28,15 +28,15 @@ jobs:
     steps:
       - checkout
       # Run your orb's commands to validate them.
-        - aws-code-deploy/get_deployment_id:
-            application_name: "change_to_codeDeploy_application_name"
-            deployment_group_name: "change_to_codeDeploy_deployment_group_name"
-            # Get the latest deployment ID for the specified application and deployment group
-        # Add CodeDeploy Steps like copying Artifcate to S3 etc...
-        # Fetch new CodeDeploy deployment ID status.
-        - aws-code-deploy/get_deployment_status:
-            application_name: "change_to_codeDeploy_application_name"
-            deployment_group_name: "change_to_codeDeploy_deployment_group_name"
+      - aws-code-deploy/get_deployment_id:
+          application_name: "change_to_codeDeploy_application_name"
+          deployment_group_name: "change_to_codeDeploy_deployment_group_name"
+          # Get the latest deployment ID for the specified application and deployment group
+      # Add CodeDeploy Steps like copying Artifcate to S3 etc...
+      # Fetch new CodeDeploy deployment ID status.
+      - aws-code-deploy/get_deployment_status:
+          application_name: "change_to_codeDeploy_application_name"
+          deployment_group_name: "change_to_codeDeploy_deployment_group_name"
             deployment_start_timeout: "Optional_change_to_codeDeploy_deployment_start_timeout"
             deployment_completion_timeout: "Optional_change_to_codeDeploy_deployment_completion_timeout"
 workflows:
