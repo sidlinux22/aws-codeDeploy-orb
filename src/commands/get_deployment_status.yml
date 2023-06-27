@@ -1,0 +1,30 @@
+description: >
+  This command is to get CodeDeploy latest deployment.
+parameters:
+  application_name:
+    type: string
+    description: "The name of the CodeDeploy application."
+  deployment_group_name:
+    type: string
+    description: "The name of the CodeDeploy deployment group."
+  deployment_start_timeout:
+    type: integer
+    default: 180
+    description: "Timeout for deployment start."
+  deployment_completion_timeout:
+    type: integer
+    default: 600
+    description: "Timeout for deployment completion."
+  pre_deployment_id:
+    default: ''
+    type: string
+    description: "Latest previous deployment ID."
+steps:
+  - run:
+      environment:
+        APP_NAME: <<parameters.application_name>>
+        DEPLOY_GROUP_NAME: <<parameters.deployment_group_name>>
+        DEPLOYMENT_START_TIMEOUT: <<parameters.deployment_start_timeout>>
+        DEPLOYMENT_COMPLETION_TIMEOUT: <<parameters.deployment_completion_timeout>>
+      name: CodeDeploy - Fetch <<parameters.deployment_group_name>> deployment status.
+      command: <<include(scripts/get_deployment_status.sh)>>

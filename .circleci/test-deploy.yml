@@ -4,7 +4,7 @@ orbs:
   # Reference your orb's jobs and commands below as they will exist when built.
   orb-tools: circleci/orb-tools@12.0
   # The orb definition is intentionally not included here. It will be injected into the pipeline.
-  aws-codeDeploy-status: {}
+  aws-code-deploy: sidlinux22/aws-code-deploy@0.0.1
 
 # Use this tag to ensure test jobs always run,
 # even though the downstream publish job will only run on release tags.
@@ -28,7 +28,17 @@ jobs:
     steps:
       - checkout
       # Run your orb's commands to validate them.
-      - aws-codeDeploy-status/get-deployment-id
+      - aws-code-deploy/get_deployment_id:
+          application_name: "change_to_codeDeploy_application_name"
+          deployment_group_name: "change_to_codeDeploy_deployment_group_name"
+          # Get the latest deployment ID for the specified application and deployment group
+      # Add CodeDeploy Steps like copying Artifcate to S3 etc...
+      # Fetch new CodeDeploy deployment ID status.
+      - aws-code-deploy/get_deployment_status:
+          application_name: "change_to_codeDeploy_application_name"
+          deployment_group_name: "change_to_codeDeploy_deployment_group_name"
+          deployment_start_timeout: 300
+          deployment_completion_timeout: 600
 workflows:
   test-deploy:
     jobs:
@@ -40,7 +50,7 @@ workflows:
       - orb-tools/pack:
           filters: *release-filters
       - orb-tools/publish:
-          orb_name: sidlinux22/aws-codeDeploy-status
+          orb_name: sidlinux22/aws-code-deploy
           vcs_type: << pipeline.project.type >>
           pub_type: production
           # Ensure this job requires all test jobs and the pack job.

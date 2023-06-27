@@ -24,17 +24,17 @@ usage:
             region: AWS_REGION
             # Provide AWS access key, secret access key, and region as environment variables
         # Fetch latest deployment ID before new deployment start.
-        - aws-code-deploy/get-deployment-id:
-            application-name: "change_to_codeDeploy_application-name"
-            deployment-group-name: "change_to_codeDeploy_deployment-group-name"
+        - aws-code-deploy/get_deployment_id:
+            application_name: "change_to_codeDeploy_application_name"
+            deployment_group_name: "change_to_codeDeploy_deployment_group_name"
             # Get the latest deployment ID for the specified application and deployment group
         # Add CodeDeploy Steps like copying Artifcate to S3 etc...
         # Fetch new CodeDeploy deployment ID status.
-        - aws-code-deploy/get-deployment-status:
-            application-name: "change_to_codeDeploy_application-name"
-            deployment-group-name: "change_to_codeDeploy_deployment-group-name"
-            deployment-start-timeout: "Optional_change_to_codeDeploy_deployment-start-timeout"
-            deployment-completion-timeout: "Optional_change_to_codeDeploy_deployment-completion-timeout"
+        - aws-code-deploy/get_deployment_status:
+            application_name: "change_to_codeDeploy_application_name"
+            deployment_group_name: "change_to_codeDeploy_deployment_group_name"
+            deployment_start_timeout: "Optional_change_to_codeDeploy_deployment_start_timeout"
+            deployment_completion_timeout: "Optional_change_to_codeDeploy_deployment_completion_timeout"
             # Get the status of the new CodeDeploy deployment using the latest deployment ID
   workflows:
     version: 2
